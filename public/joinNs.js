@@ -40,7 +40,7 @@ function joinNs(endpoint){
     })
 
     nsSocket.on('messageToClients',(msg)=>{
-        console.log(msg)
+        // console.log(msg)
         const newMsg=buildHTML(msg)
          document.querySelector("#messages").innerHTML+=newMsg
      })

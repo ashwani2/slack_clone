@@ -26,7 +26,7 @@ let nsData=namespaces.map((ns)=>{
   }
 })
 
-// console.log(nsData)
+// console.log(socket.handshake)  // for query object
 // send the nsData back to the client.We need to use the socket ,Not IO,because we want it to go to just
 // this client
 socket.emit('nsList',nsData)
@@ -43,9 +43,11 @@ namespaces.forEach((namespace)=>{
   // thisNs.on()
 
   // either we can do the method above or below
-  console.log(namespace.endpoint  )
+  // console.log(namespace.endpoint)
   io.of(namespace.endpoint).on('connection',(nsSocket)=>{
-    console.log(`${nsSocket.id} has joined ${namespace.endpoint}`)
+
+    const username=nsSocket.handshake.query.username
+    // console.log(`${nsSocket.id} has joined ${namespace.endpoint}`)
 
     // A socket has connected to tone of our chat namespaces
     // send that ns group info back
@@ -71,10 +73,12 @@ namespaces.forEach((namespace)=>{
     });
     nsSocket.on('newMessageToServer',(msg)=>{
 
+      console.log(username)
+
       const fullMsg={
         text:msg.text,
         time:Date.now(),
-        username:'Ashwani',
+        username:username,
         avatar:'https://via.placeholder.com/30'
       }
 
@@ -91,7 +95,7 @@ namespaces.forEach((namespace)=>{
       })
 
       nsRoom.addMessage(fullMsg);
-      console.log(nsRoom)
+      // console.log(nsRoom)
 
 
       io.of(namespace.endpoint).to(roomTitle).emit('messageToClients',fullMsg)

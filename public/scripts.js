@@ -1,9 +1,17 @@
 
-let socket=io("http://localhost:9000") //   The "/" namespace endpoint
+const username=prompt("What is your username?")
+
+
+// let socket=io("http://localhost:9000") //   The "/" namespace endpoint
+let socket=io("http://localhost:9000",{
+    query:{
+        username
+    }
+}) //   The "/" namespace endpoint
 let nsSocket=""
 // listen for the nslist which is the lsit of all the namespaces
 socket.on('nsList',(nsData)=>{
-    console.log("the List of namespaces has arrived")
+    // console.log("the List of namespaces has arrived")
     let namespacesDiv=document.querySelector('.namespaces');
     namespacesDiv.innerHTML="";
     nsData.forEach((ns)=>{
@@ -16,7 +24,7 @@ socket.on('nsList',(nsData)=>{
         // console.log(elem)
         elem.addEventListener('click',(e)=>{
             const nsEndpoint = elem.getAttribute('ns');
-            console.log(`${nsEndpoint} I should go to now`)
+            // console.log(`${nsEndpoint} I should go to now`)
             joinNs(nsEndpoint)
         })
       
