@@ -11,16 +11,17 @@ socket.on('nsList',(nsData)=>{
     })
 
     // Add a click lstener for Each NS
-    console.log(document.getElementsByClassName('namespace'))
+    // console.log(document.getElementsByClassName('namespace'))
     Array.from(document.getElementsByClassName('namespace')).forEach((elem)=>{
         // console.log(elem)
         elem.addEventListener('click',(e)=>{
             const nsEndpoint = elem.getAttribute('ns');
             console.log(`${nsEndpoint} I should go to now`)
+            joinNs(nsEndpoint)
         })
       
     })
-    joinNs("wiki")
+    joinNs("/wiki")
 })
 
 
